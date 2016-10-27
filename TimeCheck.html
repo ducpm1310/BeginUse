@@ -1,0 +1,75 @@
+﻿<html>
+<head>
+    <style>
+        #wrap{margin:auto;width:300px; height:200px;border:1px solid #ddd;box-shadow:0px 5px 10px 1px rgba(0,0,0,0.1);border-radius: 10px;overflow:hidden;}
+        #title{background:#4CAF50;height:30px;}
+        table{padding: 10px;}
+		#main{padding-top:30px;}
+		#submit{position="absolute"; margin-left:95px;}
+    </style>
+</head>
+<body>
+    <form id="main">
+        <div id="wrap">
+            <div id="title"></div>
+            <table>
+                <tr>
+                    <td><p>Start Time</p></td>
+                    <td><input type="number" id="iStart" min="0" max="23" required style="width:180px"></td>
+                </tr>
+                <tr>
+                    <td><p>End Time</p></td>
+                    <td><input type="number" id="iEnd" min="0" max="23" required style="width:180px"></td>
+                </tr>
+                <tr>
+                    <td><p>Check Time</p></td>
+                    <td><input type="number" id="iCheck" min="0" max="23" required style="width:180px" onchange="Check()"></td>
+                </tr>
+				<tr>
+            </table>
+            <input type="submit" id="submit" onclick="Check();" value="Check" margin-left="500px" >
+            <br>
+            <div id="result"></div>
+        </div>
+    </form>
+    <script language="javascript">
+    var eStart = document.getElementById("iStart");
+    var eEnd = document.getElementById("iEnd");
+    var eCheck = document.getElementById("iCheck");
+    var eResult = document.getElementById("result");
+    //機能  Submitボタン押下処理
+    function Check() {
+        if (eStart.value == "" || eEnd.value == "" || eCheck.value == "") {
+            eResult.innerText = ("Input time, please");
+        } else {
+			CompareTime();
+        };
+    };
+	//時間を比べる関数
+    function CompareTime() {
+        var start = parseInt(eStart.value);
+        var end = parseInt(eEnd.value);
+        var check = parseInt(eCheck.value);
+		//starttimeよりendtimeの値が多い場絵は、
+        if (start <= end) {
+            if (check >= start && check <= end) {
+                eResult.innerText = (check+' be long to '+start+' -> '+end);
+				return true;
+            } else {
+                eResult.innerText = (check+' not be long to '+start+' -> '+end);
+				return false;
+            }
+        }
+		//endtimeよりstartimeの値が多い場絵は、
+        else {
+            if (check >= start || check <= end) {
+                eResult.innerText = (check+' be long to '+start+' -> '+end);
+				return true;
+            }
+            else
+                eResult.innerText = (check+' not be long to '+start+' -> '+end);
+        }
+    }
+    </script>
+</body>
+</html>
